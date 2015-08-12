@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt" ng-app="audioApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="sweetalert.css">
+    <link rel="stylesheet" href="audioapp.css">
+    <title>Music Pieces</title>
+  </head>
+  <body>
+    <div class="content" ng-controller="AudioController as control">
+      <div class="title">
+        <span class="name_app">Music Pieces</span> <span class="created">Created by: <a href="http://github.com/victoralencar" target="_blank">Victor Hugo</a></span>
+      </div>
+      <form class="pure-form">
+        <div class="audio_source">
+          <button class="pure-button pure-button-primary" ng-click="control.play()">Play</button>
+          <button class="pure-button button-pause" ng-click="control.pause()">Pause</button>
+          <button class="pure-button button-stop" ng-click="control.stop()">Stop</button>
+          <div class="currentTime">
+            {{sound.currentTime | trackTime}}
+          </div>
+          <div ng-style="control.width_progress" class="progress"></div>
+        </div>
+        <div class="audio_striped">
+          <input type="text" ng-model="control.texto" placeholder="Description">
+          <input ng-model="control.inicio" type="number">
+          <input ng-model="control.fim" type="number">
+          <button class="pure-button pure-button-primary" ng-click="control.playInterval(control.inicio, control.fim)">Play interval</button>
+          <button class="pure-button pure-button-primary" ng-click="control.savePiece()">Save</button>
+        </div>
+        <div class="pieces">
+          <div class="piece" ng-repeat="piece in control.pieces"><span>{{piece.texto}}</span> ({{piece.inicio}} at {{piece.fim}}) <button style="float: right" class="pure-button pure-button-primary" ng-click="control.playInterval(piece.inicio, piece.fim)">Play</button></div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="angular.js"></script>
+  <script src="angular.audio.js"></script>
+  <script src="sweetalert.min.js"></script>
+  <script src="audioapp.js"></script>
+</html>

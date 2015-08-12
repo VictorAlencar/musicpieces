@@ -1,0 +1,60 @@
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: url(http://subtlepatterns.com/patterns/stardust.png);
+}
+.title {
+  font-family: 'Cookie', cursive;
+  min-height: 100px;
+  text-align: center;
+  background-color: #3498db;
+  color: white;
+}
+.content {
+  background: white;
+}
+.name_app {
+  font-size: 5em;
+}
+.created {
+  font-size: 1.2em;
+}
+.created a {
+  color: white;
+}
+.audio_source {
+  background-color: #2c3e50;
+  text-align: center;
+  padding-top: 20px;
+}
+.audio_source button{
+  border-radius: 8px;
+  font-size: 1.5em;
+}
+.audio_source .currentTime {
+  font-size: 2em;
+  color: #34D8F9;
+  margin: 10px;
+}
+.audio_striped {
+  background: #95a5a6;
+  padding: 20px 0px;
+  text-align: center;
+}
+.button-pause {
+  background: #e67e22;
+  color: white;
+}
+.button-stop {
+  background: rgb(202, 60, 60);
+  color: white;
+}
+.progress {
+  height: 20px;
+  background-color: #9b59b6;
+}
+.piece {
+  padding: 15px;
+  color: white;
+  background-color: #9b59b6;
+}
