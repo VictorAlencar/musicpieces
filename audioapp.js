@@ -1,15 +1,15 @@
-var audioApp = angular.module("audioApp", ['ngAudio']);
+var audioApp = angular.module("audioApp", ['ngAudio', 'LocalStorageModule']);
 
-audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout', function($log, $scope, ngAudio, $timeout) {
+audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout', 'localStorageService', function($log, $scope, ngAudio, $timeout, localStorageService) {
   var control = this;
-  $scope.sound = ngAudio.load("music/06.mp3");
+  $scope.sound = ngAudio.load("music/16.mp3");
 
   control.inicio = 0;
   control.fim = 0;
   control.texto = '';
   control.width_progress = {width: '0%'};
 
-  control.pieces = [];
+  control.pieces = localStorageService.get('pieces') || [];
 
   $scope.$watch('sound.progress', function(){
     control.width_progress = {width: (($scope.sound.progress)*100)+'%'};
@@ -46,6 +46,7 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
 
   control.savePiece = function() {
     control.pieces.push({inicio: control.inicio, fim: control.fim, texto: control.texto});
+    localStorageService.set('pieces', control.pieces);
     sweetAlert("Saved", "Look your music piece below", "success");
     control.texto = "";
     control.inicio = 0;
