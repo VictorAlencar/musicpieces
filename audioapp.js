@@ -1,3 +1,4 @@
+'use strict'
 var audioApp = angular.module("audioApp", ['ngAudio', 'LocalStorageModule']);
 
 audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout', 'localStorageService', function($log, $scope, ngAudio, $timeout, localStorageService) {
@@ -8,6 +9,7 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
   control.fim = 0;
   control.texto = '';
   control.width_progress = {width: '0%'};
+  control.id_process_stop = 0;
 
   control.pieces = localStorageService.get('pieces') || [];
 
@@ -27,13 +29,15 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
     $scope.sound.stop();
   };
 
-  control.stopAfterSeconds = function (seconds) {
+  control.stopAfterSeconds = function (seconds, id_process_stop) {
     $timeout(function() {
+      if(id_process_stop != control.id_process_stop) return;
+
       --seconds;
       if(seconds == -1) {
         $scope.sound.stop();
       } else {
-        control.stopAfterSeconds(seconds);
+        control.stopAfterSeconds(seconds, id_process_stop);
       }
     }, 1000);
   };
@@ -41,7 +45,7 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
   control.playInterval = function (inicio, fim) {
     $scope.sound.currentTime = parseInt(inicio);
     $scope.sound.play();
-    control.stopAfterSeconds(parseInt(fim) - parseInt(inicio));
+    control.stopAfterSeconds(parseInt(fim) - parseInt(inicio), ++control.id_process_stop);
   };
 
   control.savePiece = function() {
