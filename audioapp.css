@@ -53,8 +53,14 @@ body {
   height: 20px;
   background-color: #9b59b6;
 }
-.piece {
+.piece td {
   padding: 15px;
+}
+.piece_0 {
   color: white;
-  background-color: #9b59b6;
+  background-color: #5A5A5A;
+}
+.piece_1 {
+  background-color: #D0D3D8;
+  color: #252525;
 }
