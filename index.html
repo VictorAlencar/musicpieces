@@ -39,7 +39,11 @@
           </table>
         </div>
         <div>
-          <button class="pure-button pure-button-primary" ng-click="control.saveToPc()">Download Pieces</button>
+          <button class="pure-button pure-button-primary" ng-click="control.saveToPc()">Download</button>
+          <div class="fileUpload pure-button pure-button-primary">
+            <span>Load</span>
+            <input type="file" class="upload" fileread="control.pieces">
+          </div>
         </div>
       </form>
     </div>

@@ -61,22 +61,42 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
     var data = control.pieces;
 
     if (!filename) {
-      filename = 'download.json';
+      filename = 'music_piece.json';
     }
 
     if (typeof data === 'object') {
       data = JSON.stringify(data, undefined, 2);
     }
 
-    var blob = new Blob([data], {type: 'text/json'}),
-      e = document.createEvent('MouseEvents'),
-      a = document.createElement('a');
+    var blob = new Blob([data], {type: 'text/json'});
+    var e = document.createEvent('MouseEvents');
+    var a = document.createElement('a');
 
     a.download = filename;
     a.href = window.URL.createObjectURL(blob);
     a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-    e.initMouseEvent('click', true, false, window,
-        0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     a.dispatchEvent(e);
   };
+}]);
+
+audioApp.directive("fileread", [function () {
+  return {
+    scope: {
+      fileread: "="
+    },
+    link: function (scope, element, attributes) {
+      element.bind("change", function (changeEvent) {
+        var reader = new FileReader();
+        reader.onload = function (loadEvent) {
+          var json = JSON.parse(loadEvent.target.result);
+
+          scope.$apply(function () {
+            scope.fileread = json;
+          });
+        };
+        reader.readAsText(changeEvent.target.files[0]);
+      });
+    }
+  }
 }]);
