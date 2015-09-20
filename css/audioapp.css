@@ -78,3 +78,13 @@ body {
   cursor: pointer;
   opacity: 0;
 }
+.text_piece {
+  width: 100%;
+}
+.play_piece {
+  max-width: 25px;
+}
+.remove_piece {
+  max-width: 25px;
+  cursor: pointer;
+}

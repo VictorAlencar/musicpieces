@@ -3,10 +3,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
+    <link rel="stylesheet" href="css/audioapp.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="sweetalert.css">
-    <link rel="stylesheet" href="audioapp.css">
     <title>Music Pieces</title>
   </head>
   <body>
@@ -16,9 +17,9 @@
       </div>
       <form class="pure-form">
         <div class="audio_source">
-          <button class="pure-button pure-button-primary" ng-click="control.play()">Play</button>
-          <button class="pure-button button-pause" ng-click="control.pause()">Pause</button>
-          <button class="pure-button button-stop" ng-click="control.stop()">Stop</button>
+          <button class="pure-button pure-button-primary" ng-show="sound.paused" ng-click="control.play()"><i class="fa fa-play"></i></button>
+          <button class="pure-button button-pause" ng-show="!sound.paused" ng-click="control.pause()"><i class="fa fa-pause"></i></button>
+          <button class="pure-button button-stop" ng-click="control.stop()"><i class="fa fa-stop"></i></button>
           <div class="currentTime">
             {{sound.currentTime | trackTime}}
           </div>
@@ -29,16 +30,19 @@
           <input ng-model="control.inicio" type="number">
           <input ng-model="control.fim" type="number">
           <button class="pure-button pure-button-primary" ng-click="control.playInterval(control.inicio, control.fim)">Play interval</button>
-          <button class="pure-button pure-button-primary" ng-click="control.savePiece()">Save</button>
         </div>
         <div>
           <table class="table">
           <tr class="piece" ng-class="{0:'piece_0', 1:'piece_1'}[$index%2]" ng-repeat="piece in control.pieces">
-            <td><span>{{piece.texto}}</span> ({{piece.inicio}} at {{piece.fim}}) </td>
-            <td><button style="" class="pure-button pure-button-primary" ng-click="control.playInterval(piece.inicio, piece.fim)">Play</button></td>
+            <td class="text_piece"><span>{{piece.texto}}</span> ({{piece.inicio}} at {{piece.fim}}) </td>
+            <td class="play_piece">
+              <button class="pure-button pure-button-primary" ng-click="control.playInterval(piece.inicio, piece.fim)"><i class="fa fa-play"></i></button>
+            </td>
+            <td ng-click="control.removePiece($index)" class="remove_piece"><i class="fa fa-times"></i></td>
           </table>
         </div>
         <div>
+          <button class="pure-button pure-button-primary" ng-click="control.clear()">Clear all</button>
           <button class="pure-button pure-button-primary" ng-click="control.saveToPc()">Download</button>
           <div class="fileUpload pure-button pure-button-primary">
             <span>Load</span>
@@ -48,9 +52,9 @@
       </form>
     </div>
   </body>
-  <script src="angular.js"></script>
-  <script src="angular.audio.js"></script>
-  <script src="sweetalert.min.js"></script>
-  <script src="angular-local-storage.min.js"></script>
-  <script src="audioapp.js"></script>
+  <script src="js/angular.js"></script>
+  <script src="js/angular.audio.js"></script>
+  <script src="js/sweetalert.min.js"></script>
+  <script src="js/angular-local-storage.min.js"></script>
+  <script src="js/audioapp.js"></script>
 </html>

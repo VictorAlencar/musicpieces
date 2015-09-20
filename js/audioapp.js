@@ -3,7 +3,7 @@ var audioApp = angular.module("audioApp", ['ngAudio', 'LocalStorageModule']);
 
 audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout', 'localStorageService', function($log, $scope, ngAudio, $timeout, localStorageService) {
   var control = this;
-  $scope.sound = ngAudio.load("music/16.mp3");
+  $scope.sound = ngAudio.load("music/17.mp3");
 
   control.inicio = 0;
   control.fim = 0;
@@ -17,12 +17,18 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
     control.width_progress = {width: (($scope.sound.progress)*100)+'%'};
   });
 
+  $scope.$watch('control.pieces', function() {
+      localStorageService.set('pieces', control.pieces);
+  });
+
   control.play = function () {
     $scope.sound.play();
+    $log.log();
   };
 
   control.pause = function () {
     $scope.sound.pause();
+    $log.log($scope.sound.paused);
   };
 
   control.stop = function () {
@@ -42,10 +48,28 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
     }, 1000);
   };
 
-  control.playInterval = function (inicio, fim) {
-    $scope.sound.currentTime = parseInt(inicio);
+  control.playInterval = function (begin, end) {
+    $scope.sound.currentTime = parseInt(begin);
     $scope.sound.play();
-    control.stopAfterSeconds(parseInt(fim) - parseInt(inicio), ++control.id_process_stop);
+    control.stopAfterSeconds(parseInt(end) - parseInt(begin), ++control.id_process_stop);
+  };
+
+  control.clear = function () {
+    swal({
+            title: "You are sure?",
+            text: "This process will clear all the pieces.",
+            type: "warning",
+            html: true,
+            showCancelButton: true,
+            confirmButtonColor: "#2ecc71",
+            confirmButtonText: "Yep!",
+            cancelButtonText: "Nooo!",
+            loseOnConfirm: false
+        }, function(isConfirm) {
+            if(isConfirm) {
+              control.pieces = [];
+            }
+        });
   };
 
   control.savePiece = function() {
@@ -55,6 +79,12 @@ audioApp.controller("AudioController", ['$log', '$scope', 'ngAudio', '$timeout',
     control.texto = "";
     control.inicio = 0;
     control.fim = 0;
+  };
+
+  control.removePiece = function (index) {
+    control.pieces.splice(index, 1);
+    localStorageService.set('pieces', control.pieces);
+    // TODO I have to stop the sound, if it played
   };
 
   control.saveToPc = function (filename) {
