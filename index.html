@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" ng-app="audioApp">
+<html lang="pt">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
@@ -30,6 +30,7 @@
           <input ng-model="control.inicio" type="number">
           <input ng-model="control.fim" type="number">
           <button class="pure-button pure-button-primary" ng-click="control.playInterval(control.inicio, control.fim)">Play interval</button>
+          <button class="pure-button pure-button-primary" ng-click="control.savePiece()">Save</button>
         </div>
         <div>
           <table class="table">
@@ -52,9 +53,5 @@
       </form>
     </div>
   </body>
-  <script src="js/angular.js"></script>
-  <script src="js/angular.audio.js"></script>
-  <script src="js/sweetalert.min.js"></script>
-  <script src="js/angular-local-storage.min.js"></script>
-  <script src="js/audioapp.js"></script>
+  <script data-main="js/common" src="js/lib/require.js"></script>
 </html>
